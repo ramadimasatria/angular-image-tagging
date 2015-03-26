@@ -1,0 +1,9 @@
+<div class="image-tagging">
+	<div class="tag-box" ng-show="tagBoxVisible" ng-style="getTagBoxPosition()">
+	  <input type="text" class="form-control input-sm" placeholder="What is this?">
+	  <a href="" class="btn btn-primary btn-sm">Save</a> <a href="" class="text-white" ng-click="closeTagBox()">Cancel</a>
+	</div>
+
+	<img src="" ng-src="{{imgSrc}}" ng-click="openTagBox($event)">
+</div>
+
