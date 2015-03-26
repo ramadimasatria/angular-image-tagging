@@ -1,10 +1,6 @@
 angular.module('app', ['imageTagging'])
-.controller('appCtrl', ['$scope', 'TagItem', function($scope, TagItem){
+.controller('appCtrl', ['$scope', function($scope){
 	$scope.image = 'example-img.jpg';
 
-	$scope.tagItemSvc = TagItem;
-
-	$scope.$watchCollection('tagItemSvc.getItems', function (newVal, oldVal) {
-		$scope.items = TagItem.getItems();
-	});
+	$scope.items = [];
 }]);

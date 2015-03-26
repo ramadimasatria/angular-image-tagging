@@ -1,29 +1,12 @@
 angular.module('imageTagging', [])
-  .factory('TagItem', function () {
-    var tagItems = [];
-
-    return {
-      getItems: function () {
-        return tagItems;
-      },
-
-      setItems: function (items) {
-        tagItems = items;
-      },
-
-      updateItem: function (item) {
-        tagItems.push(item);
-      },
-    }
-  })
-
-  .directive('imageTag', function (TagItem) {
+  .directive('imageTag', function () {
     return {
       templateUrl: 'image-tagging.tpls.html',
       restrict: 'E',
       replace: true,
       scope: {
         imgSrc: '=',
+        items: '=',
       },
       link: function (scope, element, attrs) {
         // Elements
@@ -103,10 +86,10 @@ angular.module('imageTagging', [])
             }
           };
 
-          TagItem.updateItem(item);
+          scope.items.push(item);
 
           // Close the box
-          scope.tagBoxVisible = false;
+          scope.closeTagBox();
         };
 
         scope.openTagBox = function (e) {
