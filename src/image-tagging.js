@@ -1,5 +1,23 @@
 angular.module('imageTagging', [])
-  .directive('imageTag', function () {
+  .factory('TagItem', function () {
+    var tagItems = [];
+
+    return {
+      getItems: function () {
+        return tagItems;
+      },
+
+      setItems: function (items) {
+        tagItems = items;
+      },
+
+      updateItem: function (item) {
+        tagItems.push(item);
+      },
+    }
+  })
+
+  .directive('imageTag', function (TagItem) {
     return {
       templateUrl: 'image-tagging.tpls.html',
       restrict: 'E',
@@ -10,6 +28,8 @@ angular.module('imageTagging', [])
       link: function (scope, element, attrs) {
         var image = element.find('img'),
             tagBox = element.find('.tag-box');
+
+        scope.items = [];
 
         scope.posX = 0;
         scope.posY = 0;
@@ -65,6 +85,30 @@ angular.module('imageTagging', [])
             left: top,
             top: left
           };
+        };
+
+        scope.submitItem = function (e) {
+          if (e.keyCode !== 13 || !scope.title) {
+            return
+          }
+
+          var item = {
+            title: scope.title,
+            position: {
+              x: scope.posX,
+              y: scope.posY
+            },
+            posRatio: {
+              x: scope.posX / scope.imageWidth,
+              y: scope.posY / scope.imageHeight
+            }
+          };
+
+          TagItem.updateItem(item);
+
+          // Close the box and reset the form
+          scope.tagBoxVisible = false;
+          scope.title = '';
         };
 
         scope.openTagBox = function (e) {

@@ -13,7 +13,23 @@
 </head>
 <body ng-controller="appCtrl">
     <div class="container">
-        <image-tag img-src="image"></image-tag>
+        <div class="row">
+            <div class="col-md-8">
+                <image-tag img-src="image"></image-tag>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Tagged Items</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="i in items" ng-bind="i.title"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
