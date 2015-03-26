@@ -26,15 +26,14 @@ angular.module('imageTagging', [])
         imgSrc: '=',
       },
       link: function (scope, element, attrs) {
+        // Elements
         var image = element.find('img'),
-            tagBox = element.find('.tag-box');
+            tagBox = element.find('.tag-box'),
+            tagInput = tagBox.find('input');
 
-        scope.items = [];
-
+        // Initial values
         scope.posX = 0;
         scope.posY = 0;
-        scope.quadrant = 1; // Can be 1, 2, 3, or 4
-
         scope.tagBoxVisible = false;
 
         scope.setPosition = function (x, y) {
@@ -106,14 +105,15 @@ angular.module('imageTagging', [])
 
           TagItem.updateItem(item);
 
-          // Close the box and reset the form
+          // Close the box
           scope.tagBoxVisible = false;
-          scope.title = '';
         };
 
         scope.openTagBox = function (e) {
           scope.setPosition(e.offsetX, e.offsetY);
+          scope.title = '';
           scope.tagBoxVisible = true;
+          tagInput.focus();
         };
 
         scope.closeTagBox = function () {
