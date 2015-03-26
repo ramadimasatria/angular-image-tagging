@@ -3,10 +3,12 @@
 	position: relative;
 }
 
-.image-tagging .tag-box{
+.image-tagging .tag-box, .image-tagging .tag-item{
+	display: block;
 	position: absolute;
 
 	background-color: rgba(0, 0, 0, 0.4);
 	border-radius: 1px;
 	padding: 5px;
+	color: #fff;
 }

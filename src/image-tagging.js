@@ -136,4 +136,21 @@ angular.module('imageTagging', [])
       }
     };
   })
+
+  .directive('imageTagItem', function () {
+    return {
+      template: '<span class="tag-item">{{ title }}</span>',
+      replace: true,
+      scope: {
+        title: '=',
+        position: '='
+      },
+      link: function (scope, element) {
+        element.css({
+          left: scope.position.x,
+          top: scope.position.y,
+        })
+      }
+    };
+  })
 ;

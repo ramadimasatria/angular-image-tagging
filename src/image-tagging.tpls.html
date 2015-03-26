@@ -1,4 +1,5 @@
 <div class="image-tagging">
+	<image-tag-item ng-repeat="item in items" title="item.title" position="item.position"></image-tag-item>
 	<image-tag-box></image-tag-box>
 	<img src="" ng-src="{{imgSrc}}" ng-click="openTagBox($event)">
 </div>
