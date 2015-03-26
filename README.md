@@ -1,2 +1,4 @@
 # angular-image-tagging
-Angular directive to implement image tagging.
+Angular directive for image tagging.
+
+-----in development-----
