@@ -8,36 +8,79 @@ angular.module('imageTagging', [])
         imgSrc: '=',
         items: '=',
       },
-      link: function (scope, element, attrs) {
-        // Elements
-        var image = element.find('img'),
-            tagBox = element.find('.tag-box'),
-            tagInput = tagBox.find('input');
+      controller: function ($scope) {
+        $scope.submit = function (item) {
+          $scope.items.push(item);
+        };
 
-        // Initial values
-        scope.posX = 0;
-        scope.posY = 0;
+        $scope.openTagBox = function (e) {
+          $scope.$emit('openTagBox', {
+            x: e.offsetX,
+            y: e.offsetY
+          });
+        };
+
+        $scope.closeTagBox = function (e) {
+          $scope.$emit('closeTagBox');
+        };
+      },
+      link: function (scope, element, attrs) {
+        var imageEl = element.find('img');
+
+        scope.setImageSize = function (){
+          scope.imageHeight = imageEl.height();
+          scope.imageWidth = imageEl.width();
+        };
+      }
+    };
+  })
+
+  .directive('imageTagBox', function () {
+    return {
+      templateUrl: 'image-tagging-box.tpls.html',
+      restrict: 'E',
+      require: '^imageTag',
+      replace: true,
+      link: function (scope, element) {
+        var inputEl = element.find('input');
+
         scope.tagBoxVisible = false;
+        scope.title = "";
 
         scope.setPosition = function (x, y) {
           scope.posX = x;
           scope.posY = y;
         };
 
-        scope.getTagBoxPosition = function () {
+        scope.setBoxSize = function () {
+          scope.boxHeight = element.outerHeight();
+          scope.boxWidth = element.outerWidth();
+        };
+
+        scope.$on('openTagBox', function (e, data) {
+          inputEl.focus();
+
+          scope.setPosition(data.x, data.y);
+          scope.title = '';
+          scope.tagBoxVisible = true;
+        });
+
+        scope.$on('closeTagBox', function () {
+          scope.tagBoxVisible = false;
+        });
+
+        scope.getPosition = function () {
           var left,
               top,
               widthRatio,
               heightRatio;
 
           if (!scope.imageWidth || !scope.imageHeight) {
-            scope.imageHeight = image.height();
-            scope.imageWidth = image.width();
+            scope.setImageSize();
           }
 
           if (!scope.boxWidth || !scope.boxHeight) {
-            scope.boxHeight = tagBox.outerHeight();
-            scope.boxWidth = tagBox.outerWidth();
+            scope.setBoxSize();
           }
 
           widthRatio = scope.posX / scope.imageWidth;
@@ -86,22 +129,11 @@ angular.module('imageTagging', [])
             }
           };
 
-          scope.items.push(item);
-
-          // Close the box
+          scope.submit(item);
           scope.closeTagBox();
         };
 
-        scope.openTagBox = function (e) {
-          scope.setPosition(e.offsetX, e.offsetY);
-          scope.title = '';
-          scope.tagBoxVisible = true;
-          tagInput.focus();
-        };
-
-        scope.closeTagBox = function () {
-          scope.tagBoxVisible = false;
-        };
       }
     };
-  });
+  })
+;
