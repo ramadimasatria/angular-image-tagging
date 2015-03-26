@@ -13,6 +13,8 @@
 </head>
 <body ng-controller="appCtrl">
     <div class="container">
+        <h1>Angular Image Tagging Demo</h1>
+
         <div class="row">
             <div class="col-md-8">
                 <image-tag img-src="image" items="items"></image-tag>
@@ -24,7 +26,9 @@
                     </div>
                     <div class="panel-body">
                         <ul>
-                            <li ng-repeat="i in items" ng-bind="i.title"></li>
+                            <li ng-repeat="i in items">
+                                <span>{{ i.title }}</span> <a href="" ng-click="removeItem($index)">&times;</a>
+                            </li>
                         </ul>
                     </div>
                 </div>

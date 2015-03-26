@@ -3,4 +3,8 @@ angular.module('app', ['imageTagging'])
 	$scope.image = 'example-img.jpg';
 
 	$scope.items = [];
+
+	$scope.removeItem = function (index) {
+		$scope.items.splice(index, 1);
+	};
 }]);
